@@ -18,6 +18,11 @@ Cloud masking is incorporated to improve the accuracy of keypoint detection and 
 
 To handle large satellite images, a downscaling approach is implemented. The images are iteratively downsampled to a specified number of levels, making the matching process more efficient without losing key features.
 
+## Data
+
+The data used in this project is from the [Farm Pin Crop Detection Challenge](https://zindi.africa/competitions/farm-pin-crop-detection-challenge/data). You can download the required files from the competition data page.
+
+
 ## Project Structure
 
 - **SIFT_BFMatcher.py**: Python script containing the SIFT and BFMatcher implementation with cloud masking.
