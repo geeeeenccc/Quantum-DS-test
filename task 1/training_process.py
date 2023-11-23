@@ -550,32 +550,9 @@ def train_model(n_epoch, dataset, embeddor, seq_len):
 
 model, optim, loss_fn = train_model(best_epoch_number, train_processed_dataset, embeddor, SEQ_LEN)
 
-"""## Validating on holdout dataset"""
-
-val_torch_dataset = TextDataset(
-    texts=holdout_processed_dataset['tokens'],
-    targets=holdout_processed_dataset['labels'],
-    embeddor=embeddor,
-    output_length=SEQ_LEN
-)
-val_dataloader = torch.utils.data.DataLoader(
-    val_torch_dataset,
-    batch_size=64
-)
-
-val_pred, val_texts, val_targets, val_losses = torch_loop(model, val_dataloader, optim, loss_fn, device=global_device,
-                                                          is_train=False)
-
-val_metric = calc_metric(val_pred, val_targets, val_texts, val_torch_dataset, th=best_threshold)
-val_loss = val_losses.mean()
-
-decoded_targets, decoded_texts = decode(val_targets, val_texts, val_torch_dataset, th=best_threshold)
-decoded_pred, _ = decode(val_pred, val_texts, val_torch_dataset, th=best_threshold)
-
-plt.hist(val_pred.flatten(), bins=10)
-plt.title('Prediction proba distrib')
-plt.show()
-print(f"Holdout metrics: {val_metric}")
-print(f"Holdout loss: {val_loss}")
-
-torch.save(model.state_dict(), "saved_weights/simpleRNN.pt")
+# torch.save(model.state_dict(), "saved_weights/simpleRNN.pt")
+torch.save({
+    'model_state_dict': model.state_dict(),
+    'optimizer_state_dict': optim.state_dict(),
+    'loss_fn_state_dict': loss_fn.state_dict()
+}, "saved_weights/simpleRNN.pt")
