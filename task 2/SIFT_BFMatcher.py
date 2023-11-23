@@ -39,7 +39,7 @@ def mouse_callback(event, x, y, flags, param):
             dx, dy = x - start_x, y - start_y
             cv2.imshow("SIFT + BFMatcher", cv2.warpAffine(img_matches, np.float32([[1, 0, dx], [0, 1, dy]]), (img_matches.shape[1], img_matches.shape[0])))
 
-# Function to match images using SIFT and BFMatcher
+# Function to match images using SIFT and BFMatcher with cloud masking
 def match_images_sift_bf_with_mask(img1, img2, cloud_mask1=None, cloud_mask2=None, scale_factor=0.5, num_levels=3):
     global img_matches  # Use the global variable
 
@@ -116,16 +116,14 @@ def match_images_sift_bf_with_mask(img1, img2, cloud_mask1=None, cloud_mask2=Non
 
 
     # Create a named window and set the mouse callback
-    cv2.namedWindow("SIFT + BFMatcher ")
-    cv2.setMouseCallback("SIFT + BFMatcher ", mouse_callback)
+    cv2.namedWindow("SIFT + BFMatcher")
+    cv2.setMouseCallback("SIFT + BFMatcher", mouse_callback)
 
     # Display the visualization
     cv2.imshow("SIFT + BFMatcher", img_matches)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-# Link to the data:
-# https://zindi.africa/competitions/farm-pin-crop-detection-challenge/data
 
 # Paths to the input images (.jp2 format)
 img1_path = '2017-01-01/T34JEP_20170101T082332_TCI.jp2'
