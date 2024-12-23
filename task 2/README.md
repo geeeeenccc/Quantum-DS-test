@@ -1,65 +1,45 @@
-# Satellite Image Matching with SIFT and BFMatcher
+# Satellite Image Matching with LoFTR
 
 ## Overview
-
-This project demonstrates a solution for matching satellite images using the Scale-Invariant Feature Transform (SIFT) algorithm and the Brute-Force Matcher from the OpenCV library. The aim is to identify key features and establish correspondences between images, with a focus on handling large satellite images and incorporating cloud masking for better accuracy.
+This project demonstrates a solution for matching satellite images using the LoFTR (Local Feature TRansformer) algorithm. The goal is to identify key features, establish correspondences between images.
 
 ## Solution Explanation
 
 ### Matching Algorithm
+The LoFTR algorithm is used to detect key points and compute descriptors across images.
 
-The SIFT algorithm is used to detect key points and compute descriptors for each image. The Brute-Force Matcher is then used to find matches between the descriptors of the two images. Ratio testing is applied to filter out unrealistic matches, and the remaining matches are visualized.
-
-### Cloud Masking
-
-Cloud masking is incorporated to improve the accuracy of keypoint detection and matching. The project provides an option to input cloud masks, allowing the algorithm to exclude keypoints in regions covered by clouds during the matching process.
+### RANSAC Filtering
+To improve the robustness of the matches, RANSAC (Random Sample Consensus) is employed for outlier filtering. The algorithm helps in rejecting false matches by estimating the transformation model that best fits the inlier matches, improving the accuracy of keypoint correspondences.
 
 ### Downscaling
+To efficiently handle large satellite images, the project implements a downscaling approach. The images are resized to a reduced resolution before matching, making the process more computationally efficient without losing crucial feature information. This is particularly useful for high-resolution satellite imagery.
 
-To handle large satellite images, a downscaling approach is implemented. The images are iteratively downsampled to a specified number of levels, making the matching process more efficient without losing key features.
-
-## Data
-
-The data used in this project is from the [Farm Pin Crop Detection Challenge](https://zindi.africa/competitions/farm-pin-crop-detection-challenge/data). You can download the required files from the competition data page.
-
+### Data
+The data used in this project comes from Sentinel-2 satellite imagery. The dataset includes images from different seasons to test the robustness of the matching algorithms under various conditions. The images are available for download from the provided dataset link.
 
 ## Project Structure
 
-- **SIFT_BFMatcher.py**: Python script containing the SIFT and BFMatcher implementation with cloud masking.
-
-- **sift-BFMatcher.ipynb**: Jupyter Notebook providing a detailed walkthrough of the solution with interactive code cells.
-
-- **requirements.txt**: File specifying the required Python packages and their versions for reproducibility.
+- `LoFTR_pipeline_setup.py`: Python script to set up the LoFTR pipeline for satellite image matching, including model configuration and setup.
+- `loftr-demo.ipynb`: Jupyter Notebook that provides a detailed walkthrough of the solution with interactive code cells, including visualization of keypoints and matches.
+- `requirements.txt`: File specifying the required Python packages and their versions for reproducibility.
 
 ## Setup
 
-1. **Clone the Repository:**
+### Clone the Repository:
+```bash
+git clone <repository_url>
+cd <repository_directory>
+```
 
-   ```bash
-   git clone <repository_url>
-   cd <repository_directory>
-   ```
+### Install Dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-2. **Install Dependencies:**
+### Run the LoFTR Pipeline:
+```bash
+python LoFTR_pipeline_setup.py
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the SIFT Matching Script:**
-
-   ```bash
-   python SIFT_BFMatcher.py
-   ```
-
-   Follow the prompts and input the paths to your satellite images and cloud masks if available.
-
-4. **Explore the Jupyter Notebook:**
-
-   Open `sift-BFMatcher.ipynb` in a Jupyter environment for a step-by-step exploration of the solution.
-
-## Notes
-
-- Ensure that your satellite images are in the .jp2 format.
-- Cloud masks are optional but recommended for better accuracy.
-- Adjust parameters in the script to suit your specific use case.
+### Explore the Jupyter Notebook:
+Open `loftr-demo.ipynb` in a Jupyter environment for a step-by-step exploration of the solution, including interactive keypoint visualization and matching results.
