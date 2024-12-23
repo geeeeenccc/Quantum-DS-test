@@ -19,6 +19,8 @@ Both `training_process.py` and `inference_process.py` Python scripts are mainly 
 ├── requirements.txt
 ├── training_process.py
 ├── README.md
+├── transformer approach
+    ├── Mountain name recognition (tranformer approach).ipynb
 ```
 
 ## Files Description
