@@ -1,5 +1,6 @@
 import os
 from glob import glob
+import time
 import matplotlib.pyplot as plt
 import gc
 import sys
@@ -134,6 +135,23 @@ def read_raster_image(path):
         raster_meta = src.meta
     raster_image = reshape_as_image(raster_image)
     return raster_image, raster_meta
+
+# Image matching and processing class
+class SolutionHolder:
+    def __init__(self):
+        self.F_dict = dict()
+
+    @staticmethod
+    def solve_keypoints(mkpts0, mkpts1):
+        if len(mkpts0) > 7:
+            F, inliers = cv2.findFundamentalMat(mkpts0, mkpts1, cv2.USAC_MAGSAC, 0.2, 0.9999, 250000)
+            inliers = inliers > 0
+        else:
+            F, inliers = np.zeros((3, 3)), None
+        return F, inliers
+
+    def add_solution(self, sample_id, mkpts0, mkpts1):
+        self.F_dict[sample_id] = SolutionHolder.solve_keypoints(mkpts0, mkpts1)
 
 # Main function
 if __name__ == "__main__":
