@@ -1,5 +1,9 @@
-rasterio==1.2.10
-opencv-python==4.5.3
-numpy==1.21.0
-matplotlib==3.4.2
-time
+torch
+torchvision
+kornia
+kornia_moons
+numpy
+opencv-python
+matplotlib
+rasterio
+argparse
